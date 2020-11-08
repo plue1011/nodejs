@@ -383,3 +383,55 @@ success
 ## 参考
 > https://prog-8.com/docs/nodejs-mysql
 
+# githubでの管理
+githubで管理するに当たって、このままでは、パスワード情報がapp.jsに記載されてしまっているため、処理を行う必要がある。  
+
+```
+tutorial
+├── node_modules
+├── package.json
+├── package-lock.json
+├── views <- 追加する
+│   └── hello.hbs <- 追加する
+├── production-config.js <- 追加
+└── .gitignore <- 追加
+```
+パスワード情報が記載されているproduction-config.jsを作成し、app.jsで読み込みを行う。
+
+- production-config.js
+```javascript
+module.exports = {
+  db: {
+    host    : 'ホスト',
+    user    : 'ユーザ',
+    password: 'パスワード',
+    database: 'データベース名'
+  }
+};
+```
+
+- app.js
+
+```javascript
+// production-config.js をインポートする(MySQLパスワード情報)
+const productionConfig = require('./production-config');
+
+// mysqlの設定情報
+const connection = mysql.createConnection({
+  host: productionConfig.db.host,
+  user: productionConfig.db.user,
+  password: productionConfig.db.password,
+  database: productionConfig.db.database
+});
+```
+
+- .gitignore
+```
+production-config.js
+```
+これによって、production-config.jsがpushされることがなくなる。
+
+
+
+## 参考
+> [1]https://neos21.hatenablog.com/entry/2017/12/19/080000
