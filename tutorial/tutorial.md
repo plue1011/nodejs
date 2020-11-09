@@ -391,8 +391,8 @@ tutorial
 ├── node_modules
 ├── package.json
 ├── package-lock.json
-├── views <- 追加する
-│   └── hello.hbs <- 追加する
+├── views
+│   └── hello.hbs
 ├── production-config.js <- 追加
 └── .gitignore <- 追加
 ```
